@@ -3,7 +3,7 @@ import { CardStyle } from "./style/Card.style";
 
 type CardProps = {
   index: number;
-  cardRank: string;
+  cardRank?: string;
   rotate?: number;
   translateX?: number;
   translateY?: number;
@@ -13,18 +13,14 @@ type CardProps = {
 const Card = ({
   selectCard,
   index,
-  cardRank,
-  rotate,
-  translateX,
-  translateY,
+  cardRank = "",
+  rotate = 0,
+  translateX = 0,
+  translateY = 0,
 }: CardProps) => {
-  const [translateStateX, setTranslateStateX] = React.useState<
-    number | undefined
-  >(0);
-  const [translateStateY, setTranslateStateY] = React.useState<
-    number | undefined
-  >(0);
-  const [rotateState, setRotateState] = React.useState<number | undefined>(0);
+  const [translateStateX, setTranslateStateX] = React.useState<number>(0);
+  const [translateStateY, setTranslateStateY] = React.useState<number>(0);
+  const [rotateState, setRotateState] = React.useState<number>(0);
   const onClickHandler = (e: React.SyntheticEvent) => {
     const delay = (ms: number) =>
       new Promise((resolve) =>
@@ -45,9 +41,9 @@ const Card = ({
       onClick={onClickHandler}
       className="card"
       cardRank={cardRank}
-      translateX={(translateX || 0) + (translateStateX || 0)}
-      translateY={(translateY || 0) + (translateStateY || 0)}
-      rotate={(rotate || 0) + (rotateState || 0)}
+      translateX={translateX + translateStateX}
+      translateY={translateY + translateStateY}
+      rotate={rotate + rotateState}
     >
       {cardRank}
     </CardStyle>
